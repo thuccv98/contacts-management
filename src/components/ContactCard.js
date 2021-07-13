@@ -1,7 +1,23 @@
 import React from 'react';
+import user from '../images/user.jpg';
 
-const ContactCard = () => {
-  return <div></div>;
+const ContactCard = (props) => {
+  const { id, name, number } = props.contact;
+
+  return (
+    <div className="item">
+      <img src={user} alt="user" className="ui avatar image" />
+      <div className="content">
+        <div className="header">{name}</div>
+        <div>{number}</div>
+      </div>
+      <i
+        className="trash alternate outline icon"
+        style={{ color: 'red', marginTop: '7px' }}
+        onClick={() => props.clickHander(id)}
+      ></i>
+    </div>
+  );
 };
 
 export default ContactCard;

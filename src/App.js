@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { uuid } from 'uuidv4';
+import { v4 as uuidv4 } from 'uuid';
 import api from './api/contacts';
 import './App.css';
 import Header from './components/Header';
@@ -11,6 +11,8 @@ import EditContact from './components/EditContact';
 
 function App() {
   const [contacts, setContacts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchFilter, setSearchFilter] = useState([]);
 
   //RetriveContacts
   const retrieveContacts = async () => {
@@ -21,7 +23,7 @@ function App() {
   const addContactHandler = async (contact) => {
     console.log(contact);
     const request = {
-      id: uuid(),
+      id: uuidv4(),
       ...contact,
     };
 
@@ -53,6 +55,24 @@ function App() {
     // setContacts(newContactList);
   };
 
+  const searchHandler = (searchTerm) => {
+    // console.log(searchTerm);
+    setSearchTerm(searchTerm);
+    //logic  handle search
+    if (searchTerm !== '') {
+      //
+      const newContactList = contacts.filter((contact) => {
+        return Object.values(contact)
+          .join('')
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
+      });
+      setSearchFilter(newContactList);
+    } else {
+      setSearchFilter(contacts);
+    }
+  };
+
   useEffect(() => {
     // const retrieveContacts = JSON.parse(localStorage.getItem('contact'));
     // if (retrieveContacts) setContacts(retrieveContacts);
@@ -79,8 +99,10 @@ function App() {
             render={(props) => (
               <ContactList
                 {...props}
-                contacts={contacts}
+                contacts={searchTerm.length < 1 ? contacts : searchFilter}
                 getContactId={removeContactHandler}
+                term={searchTerm}
+                searchKeyword={searchHandler}
               />
             )}
           />

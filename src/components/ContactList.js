@@ -24,7 +24,7 @@ const ContactList = (props) => {
   };
 
   return (
-    <div className="main">
+    <div className="ui segment">
       <h2>
         Contact List
         <Link to="/add">

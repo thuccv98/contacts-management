@@ -43,10 +43,13 @@ function App() {
   };
 
   const removeContactHandler = async (id) => {
-    await api.delete(`/contacts/${id}`);
+    const confirm = window.confirm('Are you sure you want to delete?');
+    if (confirm) {
+      await api.delete(`/contacts/${id}`);
 
-    const response = await api.get('/contacts');
-    setContacts(response.data);
+      const response = await api.get('/contacts');
+      setContacts(response.data);
+    } else return false;
 
     // const newContactList = contacts.filter((contact) => {
     //   return contact.id !== id;

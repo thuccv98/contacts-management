@@ -2,8 +2,11 @@ import React from 'react';
 
 const Header = () => {
   return (
-    <div className="ui center aligned container container segment">
-      <h2>Contacts</h2>
+    <div
+      style={{ color: 'blue', justifyContent: 'center', padding: '15px' }}
+      className="ui menu"
+    >
+      <h2>CONTACTS</h2>
     </div>
   );
 };
